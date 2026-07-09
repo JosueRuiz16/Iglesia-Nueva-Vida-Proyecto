@@ -1,0 +1,511 @@
+/* =========================================================
+   IGLESIA NUEVA VIDA — sistema de diseño
+   Paleta: papel crema + tinta marina + mostaza + coral + teal
+   Tipografía: Fredoka (display, redondeada tipo parche de camp)
+               Work Sans (cuerpo)
+               Space Mono (etiquetas / sellos)
+   Firma: "parches" tipo insignia de campamento + sello de goma
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --cream:#F5EFDC;
+  --paper:#FBF7EA;
+  --ink:#1D2B3A;
+  --ink-soft:#28394C;
+  --mustard:#E8A63D;
+  --coral:#E8613C;
+  --teal:#2E7D6B;
+  --charcoal:#26211B;
+  --line: rgba(29,43,58,0.14);
+  --shadow: 0 6px 0 rgba(29,43,58,0.9);
+  --radius: 18px;
+  --max: 480px; /* mobile-first canvas; grows via media queries */
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--charcoal);
+  font-family:'Work Sans', sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{
+  font-family:'Fredoka', sans-serif;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.08;
+  margin:0;
+}
+.eyebrow{
+  font-family:'Space Mono', monospace;
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--coral);
+  font-weight:700;
+}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+
+.wrap{
+  max-width:640px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* ---------- Barra superior ---------- */
+.topbar{
+  position:sticky; top:0; z-index:30;
+  background:var(--ink);
+  color:var(--paper);
+  border-bottom:3px solid var(--mustard);
+}
+.topbar-inner{
+  max-width:640px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 20px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:var(--paper);
+}
+.brand-mark{
+  width:34px;height:34px;flex:none;
+}
+.brand-name{
+  font-family:'Fredoka',sans-serif;
+  font-weight:600;
+  font-size:1.05rem;
+  letter-spacing:0.01em;
+}
+.topbar nav{display:none;}
+@media (min-width: 860px){
+  .topbar nav{
+    display:flex; gap:26px;
+    font-family:'Space Mono',monospace;
+    font-size:0.82rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  .topbar nav a{text-decoration:none; opacity:0.85; transition:opacity .2s;}
+  .topbar nav a:hover{opacity:1; color:var(--mustard);}
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:var(--ink);
+  color:var(--paper);
+  padding:34px 0 46px;
+  position:relative;
+  overflow:hidden;
+}
+.hero .wrap{position:relative; z-index:2;}
+.hero-badge-stamp{
+  position:absolute;
+  top:18px; right:18px;
+  width:92px; height:92px;
+  transform:rotate(9deg);
+  z-index:3;
+  opacity:0.96;
+}
+.hero h1{
+  color:var(--paper);
+  font-size:2.15rem;
+  margin-top:10px;
+}
+.hero h1 span{color:var(--mustard);}
+.hero p.lead{
+  margin-top:14px;
+  font-size:1.02rem;
+  color:rgba(251,247,234,0.86);
+  max-width:46ch;
+}
+.hero-actions{
+  margin-top:22px;
+  display:flex; flex-wrap:wrap; gap:12px;
+}
+
+/* zigzag "borde de recorte de boletín" entre secciones */
+.torn{
+  height:16px;
+  width:100%;
+  background:
+    linear-gradient(135deg, var(--cream) 25%, transparent 25%) 0 8px,
+    linear-gradient(225deg, var(--cream) 25%, transparent 25%) 0 8px;
+  background-size:16px 16px;
+  background-repeat:repeat-x;
+}
+.torn.on-ink{
+  background:
+    linear-gradient(135deg, var(--ink) 25%, transparent 25%) 0 8px,
+    linear-gradient(225deg, var(--ink) 25%, transparent 25%) 0 8px;
+  background-size:16px 16px;
+  background-repeat:repeat-x;
+}
+
+/* ---------- Botones ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:0.82rem;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:13px 18px;
+  border-radius:12px;
+  border:2px solid var(--ink);
+  background:var(--mustard);
+  color:var(--ink);
+  box-shadow: var(--shadow);
+  transition: transform .12s ease;
+}
+.btn:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(29,43,58,0.9);}
+.btn.coral{background:var(--coral); color:var(--paper); border-color:var(--ink);}
+.btn.teal{background:var(--teal); color:var(--paper); border-color:var(--ink);}
+.btn.outline{background:transparent; color:var(--paper); border-color:var(--paper); box-shadow:none;}
+.btn.outline:active{transform:none;}
+.btn.block{width:100%; justify-content:center;}
+
+/* ---------- Secciones ---------- */
+section{padding:44px 0;}
+.section-head{margin-bottom:26px;}
+.section-head h2{font-size:1.6rem; margin-top:6px;}
+
+/* ---------- Tarjeta de horario (estilo boleto) ---------- */
+.tickets{
+  display:flex; flex-direction:column; gap:14px;
+}
+.ticket{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:14px;
+  display:flex;
+  position:relative;
+  overflow:hidden;
+}
+.ticket::after{
+  content:"";
+  position:absolute; left:96px; top:0; bottom:0;
+  width:0; border-left:2px dashed var(--line);
+}
+.ticket-day{
+  width:96px; flex:none;
+  background:var(--teal);
+  color:var(--paper);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:14px 8px;
+  text-align:center;
+}
+.ticket-day .num{font-family:'Fredoka'; font-size:1.5rem; font-weight:700;}
+.ticket-day .txt{font-family:'Space Mono'; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.06em;}
+.ticket-info{padding:16px 18px; flex:1;}
+.ticket-info h3{font-size:1.08rem;}
+.ticket-info p{margin:6px 0 0; color:var(--ink-soft); font-size:0.92rem;}
+
+/* ---------- Ubicación ---------- */
+.map-card{
+  background:var(--ink);
+  color:var(--paper);
+  border-radius:var(--radius);
+  padding:22px;
+}
+.map-card p{color:rgba(251,247,234,0.8); margin:8px 0 0;}
+.map-actions{display:flex; flex-direction:column; gap:10px; margin-top:18px;}
+
+/* ---------- Placeholders de foto ---------- */
+.foto-placeholder{
+  border:2px dashed rgba(29,43,58,0.35);
+  border-radius:16px;
+  background:repeating-linear-gradient(135deg, rgba(29,43,58,0.05) 0 10px, transparent 10px 20px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:6px;
+  padding:26px 16px;
+  color:var(--ink-soft);
+  min-height:180px;
+}
+.foto-placeholder .icon{font-size:1.8rem;}
+.foto-placeholder small{font-family:'Space Mono'; font-size:0.72rem; max-width:26ch;}
+.hero .foto-placeholder{
+  border-color:rgba(251,247,234,0.35);
+  background:repeating-linear-gradient(135deg, rgba(251,247,234,0.06) 0 10px, transparent 10px 20px);
+  color:rgba(251,247,234,0.75);
+  margin-top:24px;
+}
+
+/* ---------- Historia ---------- */
+.historia-card{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:var(--radius);
+  padding:22px;
+}
+.historia-card .eyebrow{margin-bottom:8px; display:block;}
+
+/* ---------- Ministerios grid ---------- */
+.min-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px;
+}
+@media (min-width:560px){
+  .min-grid{grid-template-columns:repeat(3,1fr);}
+}
+.min-card{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:16px;
+  padding:16px 10px 14px;
+  text-align:center;
+  text-decoration:none;
+  color:var(--charcoal);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  transition:transform .15s ease, box-shadow .15s ease;
+  box-shadow:0 4px 0 rgba(29,43,58,0.85);
+}
+.min-card:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(29,43,58,0.85);}
+
+/* Marco circular tipo "parche" que envuelve el logo que subas de cada ministerio */
+.patch-frame{
+  width:68px; height:68px;
+  border-radius:50%;
+  border:3px solid var(--ink);
+  background:var(--cream);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  box-shadow: inset 0 0 0 3px var(--paper);
+  flex:none;
+}
+.patch-frame img{
+  width:100%; height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  transition: transform .3s ease;
+}
+.min-card:hover .patch-frame img,
+.min-card:focus-visible .patch-frame img{
+  transform: scale(1.12);
+}
+/* Acentos de color de fondo mientras no hay logo, o para halo detrás de logos con fondo transparente */
+.patch-frame.accent-teal{background:#D7EBE6;}
+.patch-frame.accent-coral{background:#FBDCD1;}
+.patch-frame.accent-mustard{background:#FBE9CC;}
+.patch-frame.accent-ink{background:#DCE1E7;}
+
+.min-card .name{font-family:'Fredoka'; font-weight:600; font-size:0.92rem; line-height:1.15;}
+
+/* ---------- Logo grande en la página de cada ministerio ---------- */
+.patch-big-frame{
+  width:120px; height:120px;
+  border-radius:50%;
+  border:4px solid var(--mustard);
+  background:rgba(251,247,234,0.12);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  margin:0 auto 14px;
+}
+.patch-big-frame img{
+  width:100%; height:100%;
+  object-fit:cover;
+  border-radius:50%;
+}
+
+/* ---------- Botón "Conoce a los maestros" ---------- */
+.teacher-cta{
+  display:flex; align-items:center; gap:12px;
+  background:var(--teal); color:var(--paper);
+  border:2px solid var(--ink); border-radius:14px;
+  padding:14px 16px; text-decoration:none;
+  box-shadow:0 4px 0 rgba(29,43,58,0.85);
+  transition: transform .12s ease;
+}
+.teacher-cta:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(29,43,58,0.85);}
+.teacher-cta .ico{font-size:1.5rem; flex:none;}
+.teacher-cta .txt strong{display:block; font-family:'Fredoka'; font-weight:600; font-size:1rem;}
+.teacher-cta .txt span{display:block; font-size:0.82rem; opacity:0.9; margin-top:2px;}
+.teacher-cta .arrow{margin-left:auto; font-size:1.3rem; flex:none;}
+
+/* ---------- Página "Conociendo a los maestros" ---------- */
+.maestros-section{padding:32px 0; scroll-margin-top:80px;}
+.maestros-section:not(:last-child){border-bottom:2px dashed var(--line);}
+.maestros-section-head{
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:18px;
+}
+.maestros-section-head .mini-patch{
+  width:48px; height:48px; border-radius:50%;
+  border:2px solid var(--ink); overflow:hidden; flex:none;
+  background:var(--cream);
+}
+.maestros-section-head .mini-patch img{width:100%; height:100%; object-fit:cover;}
+.maestros-section-head h2{font-size:1.25rem;}
+.maestros-section-head .tag{
+  font-family:'Space Mono',monospace; font-size:0.68rem;
+  text-transform:uppercase; color:var(--teal); letter-spacing:0.04em;
+}
+
+.teacher-row{
+  display:flex; align-items:center; gap:16px;
+  background:var(--paper); border:2px solid var(--ink); border-radius:16px;
+  padding:14px; margin-bottom:12px;
+}
+.teacher-photo{
+  width:82px; height:104px; flex:none;
+  border-radius:50% / 44%;
+  overflow:hidden;
+  border:3px solid var(--ink);
+  background:var(--cream);
+}
+.teacher-photo img{
+  width:100%; height:100%; object-fit:cover;
+  transition: transform .3s ease;
+}
+.teacher-row:hover .teacher-photo img,
+.teacher-row:focus-within .teacher-photo img{
+  transform: scale(1.1);
+}
+.teacher-info h3{font-size:1rem; margin-bottom:2px;}
+.teacher-info .role{
+  font-family:'Space Mono',monospace; font-size:0.7rem;
+  text-transform:uppercase; color:var(--teal); letter-spacing:0.03em;
+}
+.teacher-info p{margin:6px 0 0; font-size:0.88rem; color:var(--ink-soft);}
+.min-card .tag{font-family:'Space Mono'; font-size:0.62rem; text-transform:uppercase; color:var(--teal); letter-spacing:0.04em;}
+
+/* ---------- Oración ---------- */
+.oracion{
+  background:var(--coral);
+  color:var(--paper);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  position:relative;
+  overflow:hidden;
+}
+.oracion .eyebrow{color:var(--ink);}
+.oracion h2{color:var(--paper);}
+.oracion p{color:rgba(251,247,234,0.92);}
+.oracion .btn{margin-top:16px;}
+
+/* ---------- Blog ---------- */
+.post-list{display:flex; flex-direction:column; gap:16px;}
+.post-card{
+  background:var(--paper);
+  border:2px solid var(--ink);
+  border-radius:16px;
+  padding:18px;
+}
+.post-card .eyebrow{display:block; margin-bottom:6px;}
+.post-card h3{font-size:1.1rem; margin-bottom:6px;}
+.post-card p{margin:0; color:var(--ink-soft); font-size:0.93rem;}
+
+/* ---------- Footer ---------- */
+footer{
+  background:var(--ink);
+  color:rgba(251,247,234,0.75);
+  padding:32px 0 110px;
+  text-align:center;
+  font-size:0.85rem;
+}
+footer .brand-name{color:var(--paper);}
+footer a{color:var(--mustard); text-decoration:none;}
+
+/* ---------- Página interna de ministerio ---------- */
+.min-hero{
+  background:var(--ink); color:var(--paper);
+  padding:30px 0 40px;
+  text-align:center;
+}
+.min-hero .patch-big{width:120px; height:120px; margin:0 auto 14px;}
+.min-hero h1{font-size:1.9rem; color:var(--paper);}
+.min-hero .versiculo{
+  margin-top:14px; font-style:normal;
+  color:var(--mustard);
+  font-family:'Space Mono',monospace;
+  font-size:0.85rem;
+}
+.back-link{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:'Space Mono',monospace; font-size:0.78rem;
+  text-transform:uppercase; text-decoration:none;
+  color:rgba(251,247,234,0.85);
+  margin-bottom:10px;
+}
+.info-list{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+.info-item{
+  background:var(--paper); border:2px solid var(--ink); border-radius:14px;
+  padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
+}
+.info-item .ico{font-size:1.3rem;}
+.info-item h3{font-size:0.98rem; margin-bottom:4px;}
+.info-item p{margin:0; color:var(--ink-soft); font-size:0.9rem;}
+
+/* ---------- FAB (menú flotante) ---------- */
+.fab-wrap{
+  position:fixed; right:18px; bottom:18px; z-index:50;
+  display:flex; flex-direction:column-reverse; align-items:flex-end; gap:12px;
+}
+.fab-main{
+  width:60px; height:60px; border-radius:50%;
+  background:var(--coral); border:3px solid var(--ink);
+  color:var(--paper); font-size:1.5rem;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 5px 0 rgba(29,43,58,0.85);
+  cursor:pointer;
+  transition:transform .25s ease;
+}
+.fab-wrap.open .fab-main{transform:rotate(135deg);}
+.fab-menu{
+  display:flex; flex-direction:column; gap:10px;
+  align-items:flex-end;
+  opacity:0; pointer-events:none;
+  transform:translateY(8px);
+  transition:opacity .18s ease, transform .18s ease;
+}
+.fab-wrap.open .fab-menu{opacity:1; pointer-events:auto; transform:translateY(0);}
+.fab-item{
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none;
+  background:var(--paper); color:var(--ink);
+  border:2px solid var(--ink);
+  border-radius:999px;
+  padding:9px 16px 9px 9px;
+  font-family:'Space Mono',monospace; font-size:0.78rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:0.03em;
+  box-shadow:0 4px 0 rgba(29,43,58,0.85);
+  white-space:nowrap;
+}
+.fab-item .ico{
+  width:30px;height:30px; border-radius:50%;
+  background:var(--mustard);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+}
+.fab-item.active{background:var(--ink); color:var(--paper);}
+.fab-item.active .ico{background:var(--coral);}
+.fab-overlay{
+  position:fixed; inset:0; background:rgba(29,43,58,0.35);
+  z-index:40; opacity:0; pointer-events:none; transition:opacity .18s ease;
+}
+.fab-wrap.open ~ .fab-overlay,
+.fab-overlay.show{opacity:1; pointer-events:auto;}
+
+/* ---------- utilidades ---------- */
+.center{text-align:center;}
+.mt-8{margin-top:8px;} .mt-16{margin-top:16px;} .mt-24{margin-top:24px;}
+.stack-2col{display:grid; grid-template-columns:1fr; gap:16px;}
+@media (min-width:640px){ .stack-2col{grid-template-columns:1fr 1fr;} }
+
+/* accesibilidad: foco visible */
+a:focus-visible, button:focus-visible{
+  outline:3px solid var(--mustard); outline-offset:2px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+}
