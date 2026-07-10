@@ -36,55 +36,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = wrap.querySelector('.carousel-arrow.next');
     if (!track || slides.length === 0) return;
 
-    const AUTOPLAY_MS = 4000;
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let autoplayTimer = null;
+    let activeIndex = 0;
 
     function setActive(index){
+      activeIndex = index;
       dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
     }
 
-    function currentIndex(){
-      const activeIdx = dots.findIndex((d) => d.classList.contains('active'));
-      return activeIdx === -1 ? 0 : activeIdx;
-    }
-
+    // Mueve el carrusel calculando la posición exacta con scrollTo,
+    // en vez de scrollIntoView (que a veces no se mueve bien cuando
+    // el contenedor tiene scroll-snap, sobre todo en navegadores de PC).
     function goTo(index){
-      // bucle: si se pasa del final vuelve al inicio, y viceversa
       const looped = (index + slides.length) % slides.length;
-      slides[looped].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      const slide = slides[looped];
+      const targetLeft = slide.offsetLeft - (track.clientWidth - slide.clientWidth) / 2;
+      track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      setActive(looped);
     }
 
-    function startAutoplay(){
-      if (prefersReducedMotion) return; // respeta accesibilidad, no forzamos movimiento
-      stopAutoplay();
-      autoplayTimer = setInterval(() => goTo(currentIndex() + 1), AUTOPLAY_MS);
-    }
-    function stopAutoplay(){
-      if (autoplayTimer) clearInterval(autoplayTimer);
-    }
-
+    // Mantiene sincronizados los puntos cuando el usuario desliza con el dedo
     if ('IntersectionObserver' in window){
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(slides.indexOf(entry.target));
+          if (entry.isIntersecting){
+            activeIndex = slides.indexOf(entry.target);
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+          }
         });
       }, { root: track, threshold: 0.6 });
       slides.forEach((slide) => observer.observe(slide));
     }
 
     dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => { goTo(index); startAutoplay(); });
+      dot.addEventListener('click', () => goTo(index));
     });
-    prevBtn?.addEventListener('click', () => { goTo(currentIndex() - 1); startAutoplay(); });
-    nextBtn?.addEventListener('click', () => { goTo(currentIndex() + 1); startAutoplay(); });
-
-    // Pausa al interactuar a mano (tocar/arrastrar), y reanuda un momento después
-    track.addEventListener('touchstart', stopAutoplay, { passive: true });
-    track.addEventListener('mousedown', stopAutoplay);
-    track.addEventListener('touchend', startAutoplay, { passive: true });
-    track.addEventListener('mouseup', startAutoplay);
-
-    startAutoplay();
+    prevBtn?.addEventListener('click', () => goTo(activeIndex - 1));
+    nextBtn?.addEventListener('click', () => goTo(activeIndex + 1));
   });
 });

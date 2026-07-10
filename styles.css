@@ -565,6 +565,7 @@ a:focus-visible, button:focus-visible{
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
+  touch-action:pan-x; /* deja que el dedo deslice horizontalmente sin pelear con el scroll de la página */
   padding-bottom:4px;
   scrollbar-width:none;
 }
@@ -577,29 +578,47 @@ a:focus-visible, button:focus-visible{
 @media (min-width:640px){ .carousel-slide{ flex-basis:58%; } }
 @media (min-width:900px){ .carousel-slide{ flex-basis:31%; } }
 
+/* Flechas: tamaño de toque recomendado (44px) y SIEMPRE dentro del área visible
+   (antes usaban left/right negativos y quedaban recortadas por el contenedor,
+   por eso solo "una parte" del botón respondía al tocar). */
 .carousel-arrow{
   position:absolute; top:50%; transform:translateY(-50%);
-  width:36px; height:36px; border-radius:50%;
+  width:44px; height:44px; border-radius:50%;
   background:var(--paper); border:2px solid var(--ink);
   display:flex; align-items:center; justify-content:center;
-  font-size:1.1rem; line-height:1; cursor:pointer;
+  font-size:1.2rem; line-height:1; cursor:pointer;
   box-shadow:0 3px 0 rgba(29,43,58,0.85);
   z-index:2;
+  touch-action:manipulation; /* evita el retraso/doble-toque del navegador en móvil */
+  -webkit-tap-highlight-color:transparent;
 }
-.carousel-arrow.prev{ left:-4px; }
-.carousel-arrow.next{ right:-4px; }
+.carousel-arrow.prev{ left:6px; }
+.carousel-arrow.next{ right:6px; }
 .carousel-arrow:active{ transform:translateY(-50%) translateY(2px); box-shadow:0 1px 0 rgba(29,43,58,0.85); }
-@media (max-width:559px){ .carousel-arrow{ display:none; } }
+/* Las flechas ahora se muestran también en móvil, como alternativa a deslizar con el dedo */
 
+/* Puntos: el punto visible sigue siendo pequeño (8px) pero el botón que lo
+   contiene es mucho más grande (36px), así que tocar "cerca" del punto
+   también funciona, no solo el pixel exacto del centro. */
 .carousel-dots{
-  display:flex; justify-content:center; gap:7px; margin-top:12px;
+  display:flex; justify-content:center; align-items:center; gap:2px; margin-top:6px;
 }
 .carousel-dots .dot{
-  width:8px; height:8px; border-radius:50%;
-  background:var(--line); border:none; padding:0; cursor:pointer;
-  transition: background .15s ease, transform .15s ease;
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  background:transparent; border:none; padding:0; margin:0; cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
-.carousel-dots .dot.active{ background:var(--coral); transform:scale(1.25); }
+.carousel-dots .dot::after{
+  content:"";
+  width:8px; height:8px; border-radius:50%;
+  background:var(--line);
+  transition: background .15s ease, transform .15s ease;
+  display:block;
+}
+.carousel-dots .dot.active::after{ background:var(--coral); transform:scale(1.25); }
+
 
 /* =========================================================
    Galería de actividades (página "Ver todas las actividades")
