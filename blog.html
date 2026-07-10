@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog y devocionales — Iglesia El Faro</title>
+<title>Blog y devocionales — Iglesia Nueva Vida</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         <path d="M50 30 L28 20 M50 30 L72 20" stroke="#FBF7EA" stroke-width="3" stroke-linecap="round"/>
         <rect x="40" y="74" width="20" height="6" fill="#1D2B3A"/>
       </svg>
-      <span class="brand-name">Iglesia El Faro</span>
+      <span class="brand-name">Iglesia Nueva Vida</span>
     </a>
     <nav>
       <a href="index.html#horarios">Horarios</a>
@@ -42,39 +42,34 @@
 
 <section>
   <div class="wrap">
-    <div class="post-list">
+    <div class="post-list" id="blog-posts"></div>
 
-      <div class="post-card">
-        <span class="eyebrow">Devocional · 6 de julio</span>
-        <h3>La luz que no se apaga</h3>
-        <p>Cuando todo alrededor se ve incierto, la Palabra nos recuerda que hay una luz que ninguna tormenta puede apagar. Esta semana hablamos de sostener la fe día a día, no solo en los grandes momentos.</p>
-      </div>
-
-      <div class="post-card">
-        <span class="eyebrow">Resumen del servicio · 29 de junio</span>
-        <h3>Fe que actúa</h3>
-        <p>Un repaso de la enseñanza sobre Santiago 2: la fe se hace visible en lo que hacemos por los demás. Ideal para quienes faltaron o quieren repasar los puntos clave.</p>
-      </div>
-
-      <div class="post-card">
-        <span class="eyebrow">Devocional · 22 de junio</span>
-        <h3>Descanso en medio del ruido</h3>
-        <p>Una reflexión sobre Mateo 11:28 y cómo encontrar calma real en semanas llenas de trabajo, estudio y responsabilidades.</p>
-      </div>
-
-    </div>
+    <p id="blog-loading" class="mt-16" style="font-family:'Space Mono',monospace; font-size:0.85rem; color:var(--ink-soft); text-align:center;">
+      Cargando devocionales…
+    </p>
+    <p id="blog-empty" class="mt-16" style="display:none; font-family:'Space Mono',monospace; font-size:0.85rem; color:var(--ink-soft); text-align:center;">
+      Todavía no hay devocionales publicados en las últimas 24 horas. Vuelve pronto ✨
+    </p>
+    <p id="blog-setup" class="mt-16" style="display:none; font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--coral); text-align:center;">
+      Este blog todavía no está conectado. Sigue los pasos dentro de <strong>firebase-config.js</strong> para activarlo.
+    </p>
 
     <p class="mt-24" style="font-family:'Space Mono',monospace; font-size:0.78rem; color:var(--ink-soft); text-align:center;">
-      * Esta sección está lista para conectarse a un blog real (Ghost, WordPress, Notion, etc.) o para seguir cargándose a mano, tarjeta por tarjeta.
+      * Las publicaciones se suben desde el panel privado (<a href="admin.html" style="text-decoration:underline; color:var(--ink-soft);">admin.html</a>) y se muestran aquí automáticamente durante 24 horas.
     </p>
   </div>
 </section>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="blog-firebase.js"></script>
+
 <footer>
   <div class="wrap">
-    <span class="brand-name display">Iglesia El Faro</span>
+    <span class="brand-name display">Iglesia Nueva Vida</span>
     <p class="mt-8">Del Rótulo de Enitel Villa Fontana, 2c. al lago, Managua, Nicaragua</p>
-    <p><a href="https://wa.me/50588888888">+505 8888 8888</a> · <a href="mailto:hola@iglesiaelfaro.org">hola@iglesiaelfaro.org</a></p>
+    <p><a href="https://wa.me/50588888888">+505 8888 8888</a> · <a href="mailto:hola@iglesianuevavida.org">hola@iglesianuevavida.org</a></p>
   </div>
 </footer>
 

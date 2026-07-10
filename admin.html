@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de blog — Iglesia Nueva Vida</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Estilos propios de esta página (no afectan al resto del sitio) */
+  .admin-wrap{ max-width:520px; margin:0 auto; padding:32px 20px 80px; }
+
+  .admin-lock-card{
+    background:var(--paper); border:2px solid var(--ink); border-radius:16px;
+    padding:24px; text-align:center;
+  }
+  .admin-lock-card input{
+    width:100%; margin-top:14px; padding:12px 14px;
+    border:2px solid var(--ink); border-radius:10px;
+    font-family:'Work Sans', sans-serif; font-size:1rem;
+    background:var(--cream); color:var(--charcoal);
+  }
+  .admin-lock-card button{ margin-top:14px; width:100%; }
+  .admin-lock-error{
+    display:none; margin-top:10px; color:var(--coral);
+    font-family:'Space Mono', monospace; font-size:0.8rem;
+  }
+  .admin-security-note{
+    margin-top:16px; font-size:0.78rem; color:var(--ink-soft);
+    font-family:'Space Mono', monospace; line-height:1.5;
+  }
+
+  #admin-panel{ display:none; }
+
+  .admin-form-card{
+    background:var(--paper); border:2px solid var(--ink); border-radius:16px;
+    padding:20px;
+  }
+  .admin-form-card label{
+    display:block; font-family:'Space Mono',monospace; font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--teal);
+    margin:14px 0 6px;
+  }
+  .admin-form-card label:first-of-type{ margin-top:0; }
+  .admin-form-card input[type="text"],
+  .admin-form-card textarea{
+    width:100%; padding:12px 14px;
+    border:2px solid var(--ink); border-radius:10px;
+    font-family:'Work Sans', sans-serif; font-size:1rem;
+    background:var(--cream); color:var(--charcoal); resize:vertical;
+  }
+  .admin-form-card textarea{ min-height:110px; }
+  .admin-form-card button{ margin-top:16px; }
+  #form-msg{ margin-top:10px; font-family:'Space Mono',monospace; font-size:0.82rem; min-height:1.2em; }
+
+  .admin-posts-head{ margin:34px 0 14px; }
+  .admin-post-row{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    background:var(--paper); border:2px solid var(--ink); border-radius:14px;
+    padding:14px 16px; margin-bottom:10px;
+  }
+  .admin-post-row.vencido{ opacity:0.55; }
+  .admin-post-info h4{ font-family:'Fredoka'; font-size:0.98rem; margin:0 0 4px; color:var(--ink); }
+  .admin-post-info p{ margin:0; font-size:0.86rem; color:var(--ink-soft); }
+  .admin-post-info .estado{
+    display:block; margin-top:6px; font-family:'Space Mono',monospace;
+    font-size:0.68rem; text-transform:uppercase; letter-spacing:0.03em; color:var(--teal);
+  }
+  .admin-post-row.vencido .estado{ color:var(--coral); }
+  .admin-delete{ flex:none; font-size:0.72rem; padding:9px 12px; }
+  .admin-hint{ font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--ink-soft); }
+  #admin-setup{ display:none; color:var(--coral); font-family:'Space Mono',monospace; font-size:0.82rem; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="46" fill="#E8A63D" stroke="#1D2B3A" stroke-width="4"/>
+        <rect x="42" y="46" width="16" height="28" fill="#1D2B3A"/>
+        <polygon points="38,46 62,46 50,28" fill="#1D2B3A"/>
+        <rect x="46" y="30" width="8" height="8" fill="#E8613C"/>
+        <path d="M50 30 L28 20 M50 30 L72 20" stroke="#FBF7EA" stroke-width="3" stroke-linecap="round"/>
+        <rect x="40" y="74" width="20" height="6" fill="#1D2B3A"/>
+      </svg>
+      <span class="brand-name">Iglesia Nueva Vida</span>
+    </a>
+    <nav>
+      <a href="blog.html">Ver blog público</a>
+    </nav>
+  </div>
+</header>
+
+<div class="admin-wrap">
+
+  <!-- ===== Candado ===== -->
+  <div id="admin-lock" class="admin-lock-card">
+    <span class="eyebrow">Acceso privado</span>
+    <h2 class="mt-8" style="font-size:1.3rem;">Panel de blog</h2>
+    <p class="mt-8" style="color:var(--ink-soft); font-size:0.92rem;">Ingresa la clave para publicar un nuevo devocional.</p>
+    <input type="password" id="admin-pass" placeholder="Clave">
+    <button type="button" id="admin-unlock" class="btn block">Entrar</button>
+    <p class="admin-lock-error" id="admin-lock-error">Clave incorrecta, intenta de nuevo.</p>
+    <p class="admin-security-note">Esta clave es solo un filtro básico para gente casual — no reemplaza un inicio de sesión real. No compartas este enlace públicamente.</p>
+  </div>
+
+  <!-- ===== Panel (oculto hasta ingresar la clave) ===== -->
+  <div id="admin-panel">
+
+    <span class="eyebrow">Nueva publicación</span>
+    <h2 class="mt-8" style="font-size:1.3rem;">Publicar devocional</h2>
+    <p class="mt-8" style="color:var(--ink-soft); font-size:0.92rem;">Se mostrará en el blog público durante las próximas 24 horas.</p>
+
+    <p id="admin-setup">Este panel todavía no está conectado a Firebase. Sigue los pasos dentro de <strong>firebase-config.js</strong>.</p>
+
+    <form id="post-form" class="admin-form-card mt-16">
+      <label for="post-titulo">Título</label>
+      <input type="text" id="post-titulo" placeholder="Ej. La luz que no se apaga" required>
+
+      <label for="post-detalle">Detalle</label>
+      <textarea id="post-detalle" placeholder="Escribe aquí la reflexión o el resumen…" required></textarea>
+
+      <button type="submit" class="btn coral block">📤 Publicar</button>
+      <p id="form-msg"></p>
+    </form>
+
+    <div class="admin-posts-head">
+      <span class="eyebrow">Ahora mismo</span>
+      <h2 style="font-size:1.1rem; margin-top:4px;">Publicaciones activas</h2>
+    </div>
+    <div id="admin-posts-list">
+      <p class="admin-hint">Cargando…</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="admin-firebase.js"></script>
+</body>
+</html>
