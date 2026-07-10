@@ -533,3 +533,82 @@ a:focus-visible, button:focus-visible{
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important; transition:none !important;}
 }
+
+/* =========================================================
+   Caja placeholder reutilizable (carrusel + galería)
+   ========================================================= */
+.ph-box{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
+  border:2px dashed rgba(29,43,58,0.35);
+  background:repeating-linear-gradient(135deg, rgba(29,43,58,0.05) 0 10px, transparent 10px 20px);
+  display:flex; align-items:center; justify-content:center;
+}
+.ph-box img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+}
+.ph-box .ph-text{
+  text-align:center; color:var(--ink-soft); padding:8px;
+}
+.ph-box .ph-text .icon{ display:block; font-size:1.5rem; margin-bottom:4px; }
+.ph-box .ph-text small{ font-family:'Space Mono',monospace; font-size:0.66rem; line-height:1.3; }
+
+/* =========================================================
+   Carrusel de fotos (páginas de cada ministerio)
+   ========================================================= */
+.carousel-wrap{ position:relative; }
+.carousel{
+  display:flex; gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:4px;
+  scrollbar-width:none;
+}
+.carousel::-webkit-scrollbar{ display:none; }
+.carousel-slide{
+  flex:0 0 82%;
+  aspect-ratio:4/3;
+  scroll-snap-align:center;
+}
+@media (min-width:640px){ .carousel-slide{ flex-basis:58%; } }
+@media (min-width:900px){ .carousel-slide{ flex-basis:31%; } }
+
+.carousel-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:36px; height:36px; border-radius:50%;
+  background:var(--paper); border:2px solid var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; line-height:1; cursor:pointer;
+  box-shadow:0 3px 0 rgba(29,43,58,0.85);
+  z-index:2;
+}
+.carousel-arrow.prev{ left:-4px; }
+.carousel-arrow.next{ right:-4px; }
+.carousel-arrow:active{ transform:translateY(-50%) translateY(2px); box-shadow:0 1px 0 rgba(29,43,58,0.85); }
+@media (max-width:559px){ .carousel-arrow{ display:none; } }
+
+.carousel-dots{
+  display:flex; justify-content:center; gap:7px; margin-top:12px;
+}
+.carousel-dots .dot{
+  width:8px; height:8px; border-radius:50%;
+  background:var(--line); border:none; padding:0; cursor:pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.carousel-dots .dot.active{ background:var(--coral); transform:scale(1.25); }
+
+/* =========================================================
+   Galería de actividades (página "Ver todas las actividades")
+   ========================================================= */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:12px;
+}
+@media (min-width:640px){ .gallery-grid{ grid-template-columns:repeat(3, 1fr); } }
+@media (min-width:960px){ .gallery-grid{ grid-template-columns:repeat(4, 1fr); } }
+.gallery-item{ aspect-ratio:1/1; }
