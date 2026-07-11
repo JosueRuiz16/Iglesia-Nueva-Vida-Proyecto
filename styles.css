@@ -35,6 +35,19 @@ body{
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
+
+/* Respuesta táctil confiable en todo el sitio:
+   - touch-action:manipulation quita el retraso de ~300ms y el doble-toque
+     para hacer zoom en enlaces/botones.
+   - -webkit-tap-highlight-color:transparent quita el "flash" gris feo al tocar.
+   Los :hover puntuales del sitio ya están limitados a dispositivos con mouse
+   real (@media (hover:hover) and (pointer:fine)) para que ningún enlace
+   necesite dos toques en celular. */
+a, button{
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 h1,h2,h3,.display{
   font-family:'Fredoka', sans-serif;
   font-weight:600;
@@ -97,7 +110,9 @@ button{font-family:inherit;}
     letter-spacing:0.06em;
   }
   .topbar nav a{text-decoration:none; opacity:0.85; transition:opacity .2s;}
-  .topbar nav a:hover{opacity:1; color:var(--mustard);}
+  @media (hover:hover) and (pointer:fine){
+    .topbar nav a:hover{opacity:1; color:var(--mustard);}
+  }
 }
 
 /* ---------- Hero ---------- */
@@ -109,14 +124,47 @@ button{font-family:inherit;}
   overflow:hidden;
 }
 .hero .wrap{position:relative; z-index:2;}
-.hero-badge-stamp{
+
+/* Insignia con la foto del pastor (reemplaza el sello decorativo anterior) */
+.pastor-stamp{
   position:absolute;
   top:18px; right:18px;
-  width:92px; height:92px;
-  transform:rotate(9deg);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
   z-index:3;
-  opacity:0.96;
 }
+.pastor-stamp-ring{
+  width:92px; height:92px;
+  border-radius:50%;
+  border:2px dashed var(--mustard);
+  padding:6px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(232,166,61,0.08);
+}
+.pastor-stamp-ring img{
+  width:100%; height:100%;
+  object-fit:contain; /* si subes un PNG recortado (sin fondo), se ve flotando dentro del aro */
+}
+.pastor-stamp-name{
+  font-family:'Space Mono',monospace;
+  font-size:0.62rem;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  color:var(--mustard);
+  background:rgba(29,43,58,0.9);
+  border:1px solid var(--mustard);
+  border-radius:999px;
+  padding:3px 10px;
+  white-space:nowrap;
+  max-width:110px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+@media (max-width:380px){
+  .pastor-stamp{ top:12px; right:12px; }
+  .pastor-stamp-ring{ width:68px; height:68px; padding:4px; }
+  .pastor-stamp-name{ font-size:0.56rem; padding:2px 8px; max-width:84px; }
+}
+
 .hero h1{
   color:var(--paper);
   font-size:2.15rem;
@@ -312,8 +360,13 @@ section{padding:44px 0;}
   object-fit:cover;
   border-radius:50%;
   transition: transform .3s ease;
+  pointer-events:none; /* el toque siempre lo recibe el <a> completo, no la imagen suelta */
 }
-.min-card:hover .patch-frame img,
+@media (hover:hover) and (pointer:fine){
+  .min-card:hover .patch-frame img{
+    transform: scale(1.12);
+  }
+}
 .min-card:focus-visible .patch-frame img{
   transform: scale(1.12);
 }
@@ -391,7 +444,9 @@ section{padding:44px 0;}
   width:100%; height:100%; object-fit:cover;
   transition: transform .3s ease;
 }
-.teacher-row:hover .teacher-photo img,
+@media (hover:hover) and (pointer:fine){
+  .teacher-row:hover .teacher-photo img{ transform: scale(1.1); }
+}
 .teacher-row:focus-within .teacher-photo img{
   transform: scale(1.1);
 }
